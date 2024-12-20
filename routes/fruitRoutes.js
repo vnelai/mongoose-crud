@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
         res.status(500).json({error: error.message})
     }
   });
+  
 
   //Show route - get 1 fruit
   router.get('/:id', async (req,res) =>{
@@ -39,10 +40,20 @@ router.get("/", async (req, res) => {
 router.put('/:id', async (req,res) =>{
     try {
        const updatedFruit = await Fruit.findByIdAndUpdate(req.params.id, req.body)
+       res.json(updatedFruit)
     } catch (error) {
         res.status(500).json({error: error.message})
     }
-})
+});
 
+
+router.delete('/:id', async(req, res) => {
+  try {
+    const deletedFruit = await Fruit.findByIdAndDelete(req.params.id)
+    res.json(deletedFruit)
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }  
+});
 
 module.exports = router
